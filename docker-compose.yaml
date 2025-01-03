@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  web:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/usr/share/nginx/html
+#      - подменяем экран nginx на наш фронт в папке web - index.html
+  back:
+    build: .
+    ports:
+      - "3131:300"
+#  db:
+#    image: postgres
+#    ports:
+#      - "5467:5432"
+#    environment:
+#      POSTGRES_USER: test
+#      POSTGRES_PASSWORD: test
+#      POSTGRES_DB: test
