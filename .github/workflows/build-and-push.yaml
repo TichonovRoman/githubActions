@@ -1,13 +1,11 @@
 name: Build and Push Docker Image
 
+
+
 on:
   push:
     branches:
       - main
-env:
-  DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }} #достаем обычную переменную из гитхаба и устанавливаем ее в TEST_ENV
-  DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }} #достаем переменную из секрета гитхаба и устанавливаем ее в TEST_SECRET
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,12 +17,12 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: $DOCKER_USERNAME
-          password: $DOCKER_TOKEN
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: $DOCKER_USERNAME/devops-secrets-variables-front:latest
+          tags: ${{ vars.DOCKER_USERNAME }}/devops-secrets-variables-front:latest
